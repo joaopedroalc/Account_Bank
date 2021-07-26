@@ -4,33 +4,36 @@ import java.util.Scanner;
 
 public class Account {
     private String name;
-    private int account, booty;
+    private int account, withdrawal;
     private double balance;
+    private double limit;
     Scanner entrance = new Scanner(System.in);
     
     public Account(String name, int account, double balance_inicial){
         this.name=name;
         this.account=account;
         balance=balance_inicial;
-        booty=0;
+        withdrawal=0;
     }
-    
     public void extrato(){
         System.out.println("\nEXTRATO:");
         System.out.println("Nome: " + this.name);
         System.out.println("Número da conta: " + this.account);
         System.out.printf("Saldo atual: %.2f\n",this.balance);
-        System.out.println("Saques realizados hoje: " + this.booty + "\n");
-        
+        System.out.println("Saques realizados hoje: " + this.withdrawal + "\n");
     }
     
     public void sacar(double amount){
-        if(balance >= amount){
+        if(balance >= amount && amount <= limit){
             balance -= amount;
-            booty++;
+            withdrawal++;
             System.out.println("Sacado: " + amount);
             System.out.println("Novo saldo: " + balance + "\n");
-        } else {
+        }
+        else if(amount > limit && amount <= balance){
+            System.out.println("Digite um valor menor que o limite de saque");
+        }
+        else {
             System.out.println("Saldo insuficiente. Faça um depósito\n");
         }
     }
@@ -49,16 +52,17 @@ public class Account {
             exibeMenu();
             opcao = entrance.nextInt();
             escolheOpcao(opcao);
-        }while(opcao!=4);
+        }while(opcao!=5);
     }
     
     public void exibeMenu(){
         
         System.out.println("\nEscolha a opção desejada: ");
-        System.out.println("1 - Consultar Extrato");
-        System.out.println("2 - Sacar");
-        System.out.println("3 - Depositar");
-        System.out.println("4 - Sair\n");
+        System.out.println("1 - Limite");
+        System.out.println("2 - Consultar Extrato");
+        System.out.println("3 - Sacar");
+        System.out.println("4 - Depositar");
+        System.out.println("5 - Sair\n");
         System.out.print("Opção: ");
         
     }
@@ -67,11 +71,15 @@ public class Account {
         double amount;
         
         switch( opcao ){
-            case 1:    
+
+            case 1:
+                    limit = balance / 3;
+                    System.out.println("Limite:" + limit);
+            case 2:    
                     extrato();
                     break;
-            case 2: 
-                    if(booty<3){
+            case 3: 
+                    if(withdrawal<3){
                         System.out.print("Quanto deseja sacar: ");
                         amount = entrance.nextDouble();
                         sacar(amount);
@@ -80,13 +88,13 @@ public class Account {
                     }
                     break;
                     
-            case 3:
+            case 4:
                     System.out.print("Quanto deseja depositar: ");
                     amount = entrance.nextDouble();
                     depositar(amount);
                     break;
                     
-            case 4: 
+            case 5: 
                     System.out.println("Sistema encerrado.");
                     break;
                     
