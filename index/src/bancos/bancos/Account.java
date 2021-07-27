@@ -69,12 +69,12 @@ public class Account {
     
     public void escolheOpcao(int opcao){
         double amount;
+        limit = balance / 3;
         
         switch( opcao ){
-
             case 1:
-                    limit = balance / 3;
                     System.out.println("Limite:" + limit);
+                    break;
             case 2:    
                     extrato();
                     break;
