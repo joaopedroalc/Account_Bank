@@ -22,7 +22,7 @@ public class Account {
         System.out.printf("Saldo atual: %.2f\n",this.balance);
         System.out.println("Saques realizados hoje: " + this.withdrawal + "\n");
     }
-    
+    // MODIFICAÇÃO, USANDO CONDICIONAL PARA TRATAR DE EXCESSÕES PARA O LIMITE DE SAQUE.
     public void sacar(double amount){
         if(balance >= amount && amount <= limit){
             balance -= amount;
